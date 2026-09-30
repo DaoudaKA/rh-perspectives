@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Publique } from '../commun/decorateurs/publique.decorateur';
 import { UtilisateurCourant } from '../commun/decorateurs/utilisateur-courant.decorateur';
@@ -18,6 +18,7 @@ export class AuthentificationController {
   }
 
   @Publique()
+  @HttpCode(HttpStatus.OK)
   @Post('connexion')
   connexion(@Body() dto: ConnexionDto) {
     return this.authentification.connecter(dto);

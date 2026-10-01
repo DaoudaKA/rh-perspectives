@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { PrismaExceptionFiltre } from './commun/filtres/prisma-exception.filtre';
 
 async function demarrer() {
   const app = await NestFactory.create(AppModule);
@@ -9,6 +10,8 @@ async function demarrer() {
   app.enableCors({
     origin: process.env.CORS_ORIGIN?.split(',') ?? ['http://localhost:4200'],
   });
+
+  app.useGlobalFilters(new PrismaExceptionFiltre());
 
   app.useGlobalPipes(
     new ValidationPipe({
